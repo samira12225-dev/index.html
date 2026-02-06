@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>نشاط واجباتي في وطني</title>
+
+<style>
+body{
+    font-family: Tahoma;
+    background:#f2f6fb;
+    text-align:center;
+}
+
+h2{ color:#0b5c8a; }
+
+.word{
+    display:inline-block;
+    background:#fff;
+    padding:10px 15px;
+    margin:8px;
+    border-radius:10px;
+    box-shadow:0 3px 6px rgba(0,0,0,0.2);
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.selected{
+    background:#ffe58a;
+}
+
+.images{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:20px;
+    margin:20px;
+}
+
+.card{
+    background:white;
+    padding:10px;
+    border-radius:15px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.card img{
+    width:100%;
+    border-radius:10px;
+}
+
+.drop{
+    margin-top:10px;
+    min-height:40px;
+    border:2px dashed #0b5c8a;
+    border-radius:8px;
+    padding:5px;
+    font-weight:bold;
+}
+
+.correct{ background:#c8f7c5; }
+.wrong{ background:#ffd6d6; }
+
+footer{
+    margin:20px;
+    color:#555;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>نشاط واجباتي في وطني</h2>
+<p>اضغطي على العبارة ثم اضغطي على الصورة المناسبة</p>
+
+<audio id="successSound">
+  <source src="success.mp3" type="audio/mpeg">
+</audio>
+
+<div id="words">
+    <div class="word" data-value="work">إتقان العمل</div>
+    <div class="word" data-value="watan">الولاء والانتماء للوطن</div>
+    <div class="word" data-value="rules">احترام القوانين</div>
+    <div class="word" data-value="amlak">المحافظة على الممتلكات العامة</div>
+</div>
+
+<div class="images">
+    <div class="card">
+        <img src="images/watan.png">
+        <div class="drop" data-answer="watan"></div>
+    </div>
+
+    <div class="card">
+        <img src="images/amlak.png">
+        <div class="drop" data-answer="amlak"></div>
+    </div>
+
+    <div class="card">
+        <img src="images/work.png">
+        <div class="drop" data-answer="work"></div>
+    </div>
+
+    <div class="card">
+        <img src="images/rules.png">
+        <div class="drop" data-answer="rules"></div>
+    </div>
+</div>
+
+<footer>
+إعداد: أ. سميرة العلوي
+</footer>
+
+<script>
+let selectedWord = null;
+const sound = document.getElementById("successSound");
+
+document.querySelectorAll(".word").forEach(word=>{
+    word.addEventListener("click", ()=>{
+        document.querySelectorAll(".word").forEach(w=>w.classList.remove("selected"));
+        word.classList.add("selected");
+        selectedWord = word;
+    });
+});
+
+document.querySelectorAll(".drop").forEach(drop=>{
+    drop.addEventListener("click", ()=>{
+        if(!selectedWord) return;
+
+        drop.textContent = selectedWord.textContent;
+
+        if(selectedWord.dataset.value === drop.dataset.answer){
+            drop.className = "drop correct";
+            sound.play();
+        }else{
+            drop.className = "drop wrong";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>نشاط واجباتي في وطني</title>
+
+<style>
+body{
+    font-family: Tahoma;
+    background:#f2f6fb;
+    text-align:center;
+}
+
+h2{
+    color:#0b5c8a;
+}
+
+.words{
+    margin:20px;
+}
+
+.word{
+    display:inline-block;
+    background:#ffffff;
+    padding:10px 15px;
+    margin:8px;
+    border-radius:10px;
+    box-shadow:0 3px 6px rgba(0,0,0,0.2);
+    cursor:grab;
+    font-weight:bold;
+}
+
+.images{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:20px;
+    margin:20px;
+}
+
+.card{
+    background:white;
+    padding:10px;
+    border-radius:15px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.card img{
+    width:100%;
+    border-radius:10px;
+}
+
+.drop{
+    margin-top:10px;
+    min-height:40px;
+    border:2px dashed #0b5c8a;
+    border-radius:8px;
+    padding:5px;
+    font-weight:bold;
+}
+
+.correct{
+    background:#c8f7c5;
+    border-color:green;
+}
+
+.wrong{
+    background:#ffd6d6;
+    border-color:red;
+}
+
+footer{
+    margin:20px;
+    color:#555;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>نشاط واجباتي في وطني</h2>
+<p>اسحب العبارة المناسبة وضعها أسفل الصورة التي تعبّر عنها</p>
+
+<!-- 🔊 صوت تشجيعي -->
+<audio id="successSound">
+  <source src="success.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 🔄 ترتيب مختلف للعبارات -->
+<div class="words">
+    <div class="word" draggable="true" data-value="work">إتقان العمل</div>
+    <div class="word" draggable="true" data-value="watan">الولاء والانتماء للوطن</div>
+    <div class="word" draggable="true" data-value="rules">احترام القوانين</div>
+    <div class="word" draggable="true" data-value="amlak">المحافظة على الممتلكات العامة</div>
+</div>
+
+<div class="images">
+
+    <div class="card">
+        <img src="images/watan.png">
+        <div class="drop" data-answer="watan"></div>
+    </div>
+
+    <div class="card">
+        <img src="images/amlak.png">
+        <div class="drop" data-answer="amlak"></div>
+    </div>
+
+    <div class="card">
+        <img src="images/work.png">
+        <div class="drop" data-answer="work"></div>
+    </div>
+
+    <div class="card">
+        <img src="images/rules.png">
+        <div class="drop" data-answer="rules"></div>
+    </div>
+
+</div>
+
+<footer>
+إعداد: أ. سميرة العلوي
+</footer>
+
+<script>
+let dragged = null;
+const sound = document.getElementById("successSound");
+
+document.querySelectorAll(".word").forEach(word=>{
+    word.addEventListener("dragstart", ()=> dragged = word);
+});
+
+document.querySelectorAll(".drop").forEach(drop=>{
+    drop.addEventListener("dragover", e=> e.preventDefault());
+    drop.addEventListener("drop", ()=>{
+        drop.textContent = dragged.textContent;
+
+        if(dragged.dataset.value === drop.dataset.answer){
+            drop.className = "drop correct";
+            sound.play();
+        }else{
+            drop.className = "drop wrong";
+        }
+    });
+});
+</script>
+
+</body>
+</html>
